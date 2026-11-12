@@ -20,4 +20,4 @@ hypixel skyblock fishing mod for 26.2
 
 ## credits
 
-built on the macro core from [aether](https://github.com/mizly/aether).
+built on the macro core of [aether](https://github.com/mizly/aether).
