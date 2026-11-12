@@ -1,0 +1,36 @@
+# --- build output ---
+.gradle/
+.kotlin/
+build/
+bin/
+out/
+*.class
+*.log
+
+# --- IDE / OS ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.classpath
+.project
+.DS_Store
+
+# --- built jars (the Gradle wrapper jar under gradle/wrapper/ is kept) ---
+/*.jar
+
+# --- reference clones of other mods (third-party, not part of fish5) ---
+originals/
+
+# --- local game run data (accounts, worlds, logs) ---
+run/
+
+# --- private: NEVER publish these ---
+CLAUDE.md
+AGENTS.md
+security.txt
+.claude/
+.env
+*.key
+*.secret

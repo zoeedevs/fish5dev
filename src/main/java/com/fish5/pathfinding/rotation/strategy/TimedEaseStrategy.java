@@ -1,0 +1,60 @@
+// Ported from aether (https://github.com/mizly/aether), GPL-3.0-or-later.
+// Modified for fish5; see com/fish5/PORTED.md.
+package com.fish5.pathfinding.rotation.strategy;
+
+import com.fish5.pathfinding.rotation.AngleUtils;
+import com.fish5.pathfinding.rotation.EasingType;
+import com.fish5.pathfinding.rotation.IRotationStrategy;
+import com.fish5.pathfinding.rotation.Rotation;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+
+public final class TimedEaseStrategy implements IRotationStrategy {
+
+    private final EasingType yawEasing;
+    private final EasingType pitchEasing;
+    private final long       duration;
+
+    private float startYaw;
+    private float startPitch;
+    private long  endTime;
+
+    public TimedEaseStrategy(EasingType yawEasing, EasingType pitchEasing, long durationMs) {
+        this.yawEasing   = yawEasing;
+        this.pitchEasing = pitchEasing;
+        this.duration    = durationMs;
+    }
+
+    // same easing for yaw and pitch
+    public TimedEaseStrategy(EasingType easing, long durationMs) {
+        this(easing, easing, durationMs);
+    }
+
+    @Override
+    public void onStart() {
+        var player = Minecraft.getInstance().player;
+        if (player == null) throw new IllegalStateException("Player is null during rotation start");
+        startYaw   = player.getYRot();
+        startPitch = player.getXRot();
+        endTime    = System.currentTimeMillis() + duration;
+    }
+
+    @Override
+    public Rotation onRotate(LocalPlayer player, float targetYaw, float targetPitch) {
+        long now = System.currentTimeMillis();
+        if (now >= endTime) return new Rotation(targetYaw, targetPitch);  // hold at target
+
+        float progress = 1f - ((float)(endTime - now) / (float) duration);
+        float t        = Math.max(0f, Math.min(1f, progress));
+
+        float yawDelta = AngleUtils.normalizeAngle(targetYaw - startYaw);
+        float yaw      = yawEasing.apply(startYaw, startYaw + yawDelta, t);
+        float pitch    = clampPitch(pitchEasing.apply(startPitch, clampPitch(targetPitch), t));
+
+        return new Rotation(yaw, pitch);
+    }
+
+    private static float clampPitch(float pitch) {
+        return Math.max(-90f, Math.min(90f, pitch));
+    }
+}

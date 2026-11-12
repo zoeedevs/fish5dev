@@ -1,0 +1,32 @@
+// Ported from aether (https://github.com/mizly/aether), GPL-3.0-or-later.
+// Modified for fish5; see com/fish5/PORTED.md.
+package com.fish5.utils;
+
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+
+public final class ProgrammaticAttackTracker {
+    private static volatile boolean attackHeld = false;
+
+    private ProgrammaticAttackTracker() {
+    }
+
+    public static void setHeld(KeyMapping mapping, boolean held) {
+        attackHeld = held && mapping != null;
+    }
+
+    public static boolean isHeld() {
+        return attackHeld;
+    }
+
+    public static boolean isHeld(KeyMapping mapping) {
+        return attackHeld && mapping != null;
+    }
+
+    public static boolean shouldTreatMouseAsGrabbed(Minecraft client) {
+        return isHeld(client == null || client.options == null ? null : client.options.keyAttack)
+                && client != null
+                && client.options != null
+                && client.gui.screen() == null;
+    }
+}

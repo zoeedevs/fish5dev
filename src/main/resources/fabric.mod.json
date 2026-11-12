@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "fish5",
+  "version": "${version}",
+  "name": "Fish 5",
+  "description": "Fish 5 \u2014 Crystal Hollows worm fishing toolkit: spot finder, wormfish profit tracker and auto forge.",
+  "authors": [
+    "Fish 5"
+  ],
+  "license": "LGPL-3.0-or-later",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "com.fish5.Fish5"
+      }
+    ]
+  },
+  "mixins": [
+    "fish5.mixins.json"
+  ],
+  "accessWidener": "fish5.accesswidener",
+  "depends": {
+    "minecraft": "${minecraft}",
+    "fabricloader": ">=0.19.3",
+    "java": ">=25",
+    "fabric-language-kotlin": ">=1.13.13",
+    "fabric-api": "*"
+  }
+}
