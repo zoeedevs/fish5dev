@@ -15,3 +15,9 @@ hypixel skyblock fishing mod for 26.2
 5. launch Minecraft (make sure you're on the Fabric profile).
 
 `/f5` opens the GUI.
+
+---
+
+## credits
+
+built on the macro core from [aether](https://github.com/mizly/aether).
