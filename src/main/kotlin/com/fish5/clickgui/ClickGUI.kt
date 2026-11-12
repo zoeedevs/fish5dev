@@ -532,7 +532,7 @@ object ClickGUI : Screen(Component.literal("Click GUI")) {
     }
 
     private fun openDiscord() {
-        net.minecraft.Util.getPlatform().openUri(java.net.URI.create("https://discord.gg/r3bS2daqfT"))
+        net.minecraft.util.Util.getPlatform().openUri(java.net.URI.create("https://discord.gg/r3bS2daqfT"))
     }
 
     private fun railBtnX() = winX + (RAIL_W - RAIL_BTN) / 2f
